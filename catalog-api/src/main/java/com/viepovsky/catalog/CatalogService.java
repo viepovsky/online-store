@@ -9,8 +9,10 @@ class CatalogService {
 
     private final ProductMapper productMapper;
 
+    private final CatalogRepository catalogRepository;
+
     void addProduct(AddProductRequest request) {
         Product product = productMapper.mapToProduct(request);
-        //product save
+        catalogRepository.save(product);
     }
 }
