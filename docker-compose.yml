@@ -14,7 +14,7 @@ services:
       - mongo_network
     restart: unless-stopped
 
-  mongo-express:
+  catalog_api_mongo-express:
     container_name: mongo-express
     image: mongo-express:1.0.0-18
     environment:
@@ -33,9 +33,22 @@ services:
       - catalog_api_mongodb
     restart: unless-stopped
 
+  basket_api_redis:
+    container_name: redis
+    image: redis:6.2
+    volumes:
+      - redis_volume:/var/lib/redis
+    ports:
+      - 6379:6379
+    networks:
+      - redis_network
+    restart: unless-stopped
+
 networks:
   mongo_network:
+  redis_network:
     driver: bridge
 
 volumes:
   mongo_volume:
+  redis_volume:
