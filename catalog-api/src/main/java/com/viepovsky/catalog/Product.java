@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
 import java.util.Map;
@@ -14,16 +16,28 @@ import java.util.Map;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Document
 class Product {
-    private Long id;
+
+    @Id
+    private String id;
+
     private String name;
+
     private String brand;
+
     private String model;
+
     private String description;
+
     private ProductCategory category;
+
     private BigDecimal price;
+
     private Integer stockQuantity;
+
     private String imageUrl;
+
     private Map<String, String> properties;
 
     Product(String name,
