@@ -15,4 +15,8 @@ class CatalogService {
         Product product = productMapper.mapToProduct(request);
         catalogRepository.save(product);
     }
+//
+//    void addProduct(Product product) {
+//        catalogRepository.save(product);
+//    }
 }
