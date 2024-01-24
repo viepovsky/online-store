@@ -5,6 +5,7 @@ import com.viepovsky.basket.dto.AddProductRequest;
 import com.viepovsky.basket.dto.ProductResponse;
 import com.viepovsky.basket.dto.UpdateProductRequest;
 import com.viepovsky.open_feign_clients.catalog.CatalogClient;
+import com.viepovsky.open_feign_clients.exception_handling.WrongRequestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,10 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static com.viepovsky.open_feign_clients.exception_handling.ErrorReason.BASKET_NOT_FOUND;
+import static com.viepovsky.open_feign_clients.exception_handling.ErrorReason.PRODUCT_NOT_FOUND_IN_BASKET;
+import static com.viepovsky.open_feign_clients.exception_handling.ErrorReason.PRODUCT_NOT_FOUND_IN_CATALOG;
 
 @Service
 @RequiredArgsConstructor
@@ -42,19 +47,19 @@ class BasketService {
 
     private void checkIfProductExistsInCatalogOrThrow(String productID) {
         boolean exists = checkIfProductExistsInCatalog(productID);
-        throwIfProductDoesNotExist(exists, productID);
+        throwIfProductDoesNotExistInCatalog(exists, productID);
 
-    }
-
-    private void throwIfProductDoesNotExist(boolean exists, String productID) {
-        if (!exists)
-            throw new RuntimeException("Product of given id:" + productID + " does not exist.");
     }
 
     private boolean checkIfProductExistsInCatalog(String productId) {
         ResponseEntity<Boolean> response = catalogClient.isProductInCatalog(productId);
         return Optional.ofNullable(response.getBody())
                        .orElse(false);
+    }
+
+    private void throwIfProductDoesNotExistInCatalog(boolean exists, String productID) {
+        if (!exists)
+            throw new WrongRequestException(PRODUCT_NOT_FOUND_IN_CATALOG, productID);
     }
 
     private Basket getBasketOrCreateNew(String userID) {
@@ -78,8 +83,10 @@ class BasketService {
     private Basket getBasketOrThrow(String userID) {
         return basketRepository.findById(userID)
                                .orElseThrow(
-                                       () -> new RuntimeException("Basket of id:" + userID + " not found. " +
-                                               "Please add products by using POST instead of PUT request.")
+                                       () -> new WrongRequestException(
+                                               BASKET_NOT_FOUND,
+                                               userID
+                                       )
                                );
     }
 
@@ -101,8 +108,11 @@ class BasketService {
                   return productInBasket;
               })
               .orElseThrow(
-                      () -> new RuntimeException("Basket does not contain product of id:" + product.getProductId() +
-                              "Please add products by using POST instead of PUT request.")
+                      () -> new WrongRequestException(
+                              PRODUCT_NOT_FOUND_IN_BASKET,
+                              product.getProductId(),
+                              "Please add products by using POST instead of PUT request."
+                      )
               );
 
         basketRepository.save(basket);
