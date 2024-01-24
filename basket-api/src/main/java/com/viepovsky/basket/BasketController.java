@@ -1,7 +1,7 @@
 package com.viepovsky.basket;
 
-import com.viepovsky.basket.Basket.Product;
 import com.viepovsky.basket.dto.AddProductRequest;
+import com.viepovsky.basket.dto.ProductResponse;
 import com.viepovsky.basket.dto.UpdateProductRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -21,8 +21,10 @@ class BasketController {
     private final BasketService basketService;
 
     @GetMapping
-    ResponseEntity<List<Product>> getAllProducts(@RequestParam(name = "user-id") @NotBlank String userID) {
-        List<Product> products = basketService.getAllProducts(userID);
+    ResponseEntity<List<ProductResponse>> getAllProducts(
+            @RequestParam(name = "user-id") @NotBlank String userID
+    ) {
+        List<ProductResponse> products = basketService.getAllProducts(userID);
         return ResponseEntity.ok(products);
     }
 
