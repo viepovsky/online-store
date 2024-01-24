@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
+import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/basket")
@@ -19,8 +19,8 @@ class BasketController {
     private final BasketService basketService;
 
     @GetMapping
-    ResponseEntity<HashSet<Product>> getAllProducts(@RequestParam(name = "user-id") @NotBlank String userID) {
-        HashSet<Product> products = basketService.getAllProducts(userID);
+    ResponseEntity<List<Product>> getAllProducts(@RequestParam(name = "user-id") @NotBlank String userID) {
+        List<Product> products = basketService.getAllProducts(userID);
         return ResponseEntity.ok(products);
     }
 
@@ -30,5 +30,13 @@ class BasketController {
             @RequestBody @Valid BasketProductRequest request
     ) {
         basketService.addProduct(userID, request);
+    }
+
+    @PutMapping
+    void updateProduct(
+            @RequestParam(name = "user-id") @NotBlank String userID,
+            @RequestBody @Valid BasketProductRequest request
+    ) {
+        basketService.updateProduct(userID, request);
     }
 }

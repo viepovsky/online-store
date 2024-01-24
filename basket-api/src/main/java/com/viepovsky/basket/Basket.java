@@ -7,7 +7,7 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
-import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -20,7 +20,7 @@ class Basket {
     @Id
     private String userId;
 
-    private HashSet<Product> products;
+    private List<Product> products;
 
     @Getter
     @Setter
