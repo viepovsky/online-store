@@ -3,18 +3,23 @@ package com.viepovsky.catalog;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 
 import java.math.BigDecimal;
 
 @SpringBootApplication
+@EnableFeignClients(
+        basePackages = "com.viepovsky.open_feign_clients"
+)
 public class CatalogApplication {
     public static void main(String[] args) {
         SpringApplication.run(CatalogApplication.class, args);
     }
+
     @Bean
     CommandLineRunner commandLineRunner(CatalogService catalogService) {
-        return  args -> {
+        return args -> {
             //checkAdd(catalogService);
         };
     }

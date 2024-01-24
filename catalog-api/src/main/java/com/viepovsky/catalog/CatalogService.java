@@ -1,5 +1,6 @@
 package com.viepovsky.catalog;
 
+import com.viepovsky.catalog.dto.AddProductRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

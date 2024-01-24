@@ -1,5 +1,6 @@
 package com.viepovsky.catalog;
 
+import com.viepovsky.catalog.dto.AddProductRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;

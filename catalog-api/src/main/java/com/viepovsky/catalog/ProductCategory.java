@@ -1,6 +1,6 @@
 package com.viepovsky.catalog;
 
-enum ProductCategory {
+public enum ProductCategory {
     CLOTHING,
     ELECTRONICS,
     HOME_AND_GARDEN,

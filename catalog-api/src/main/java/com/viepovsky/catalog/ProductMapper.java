@@ -1,5 +1,6 @@
 package com.viepovsky.catalog;
 
+import com.viepovsky.catalog.dto.AddProductRequest;
 import org.springframework.stereotype.Component;
 
 @Component

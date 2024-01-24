@@ -1,5 +1,6 @@
-package com.viepovsky.catalog;
+package com.viepovsky.catalog.dto;
 
+import com.viepovsky.catalog.ProductCategory;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
