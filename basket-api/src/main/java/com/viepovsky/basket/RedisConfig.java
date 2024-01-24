@@ -8,19 +8,19 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 
 @Configuration
-@EnableRedisRepositories
+//@EnableRedisRepositories
 class RedisConfig {
 
-    @Bean
-    JedisConnectionFactory connectionFactory() {
-        RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration();
-        configuration.setHostName("localhost");
-        configuration.setPort(6379);
-        return new JedisConnectionFactory(configuration);
-    }
-
-    @Bean
-    RedisTemplate<?, ?> redisTemplate() {
-        return new RedisTemplate<byte[], byte[]>();
-    }
+//    @Bean
+//    JedisConnectionFactory connectionFactory() {
+//        RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration();
+//        configuration.setHostName("localhost");
+//        configuration.setPort(6379);
+//        return new JedisConnectionFactory(configuration);
+//    }
+//
+//    @Bean
+//    RedisTemplate<?, ?> redisTemplate() {
+//        return new RedisTemplate<byte[], byte[]>();
+//    }
 }

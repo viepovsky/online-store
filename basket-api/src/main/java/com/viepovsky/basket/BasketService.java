@@ -1,5 +1,6 @@
 package com.viepovsky.basket;
 
+import com.viepovsky.basket.Basket.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,17 +12,20 @@ class BasketService {
 
     private final BasketRepository basketRepository;
 
-    void addProductToBasket(String userID, Basket.BasketProduct product) {
-        Basket basket = basketRepository.findById(userID).orElseThrow(() -> new RuntimeException("Basket of id:" + userID + " not found."));
+    private final BasketProductMapper basketProductMapper;
+
+    void addProduct(String userID, BasketProductRequest request) {
+        Product product = basketProductMapper.mapToProduct(request);
+        Basket basket = basketRepository.findById(userID).orElse(new Basket(userID,new HashSet<>()));
         //TODO: Request to Catalog if given productId exists.
         basket.getProducts().add(product);
         basketRepository.save(basket);
     }
 
-    void updateProduct(String userID, Basket.BasketProduct product) {
+    void updateProduct(String userID, Product product) {
         Basket basket = basketRepository.findById(userID).orElseThrow(() -> new RuntimeException("Basket of id:" + userID + " not found."));
         //TODO: Request to Catalog if given productId exists.
-        HashSet<Basket.BasketProduct> products = basket.getProducts();
+        HashSet<Product> products = basket.getProducts();
         products.stream()
                 .filter(basketProduct -> basketProduct.equals(product))
                 .findFirst()

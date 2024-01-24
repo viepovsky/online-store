@@ -20,13 +20,13 @@ class Basket {
     @Id
     private String userId;
 
-    private HashSet<BasketProduct> products;
+    private HashSet<Product> products;
 
     @Getter
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
-    static class BasketProduct {
+    static class Product {
         private String productId;
         private Long quantity;
 
@@ -34,7 +34,7 @@ class Basket {
         public boolean equals(Object o) {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
-            BasketProduct that = (BasketProduct) o;
+            Product that = (Product) o;
             return Objects.equals(productId, that.productId);
         }
 
