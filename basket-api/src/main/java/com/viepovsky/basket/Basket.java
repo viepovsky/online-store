@@ -8,6 +8,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
 import java.util.HashSet;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -28,6 +29,19 @@ class Basket {
     static class BasketProduct {
         private String productId;
         private Long quantity;
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            BasketProduct that = (BasketProduct) o;
+            return Objects.equals(productId, that.productId);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(productId);
+        }
     }
 }
 
