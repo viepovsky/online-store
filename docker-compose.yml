@@ -44,6 +44,17 @@ services:
       - redis_network
     restart: unless-stopped
 
+  basket_api_redis_gui:
+    container_name: redis_insight
+    image: redislabs/redisinsight:latest
+    volumes:
+      - redis_volume:/var/lib/redis_insight
+    ports:
+      - 8001:8001
+    networks:
+      - redis_network
+    restart: unless-stopped
+
 networks:
   mongo_network:
   redis_network:
