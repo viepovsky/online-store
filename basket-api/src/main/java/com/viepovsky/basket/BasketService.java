@@ -14,6 +14,11 @@ class BasketService {
 
     private final BasketProductMapper basketProductMapper;
 
+    HashSet<Product> getAllProducts(String userID) {
+        Basket basket = basketRepository.findById(userID).orElseThrow(() -> new RuntimeException("Basket of id:" + userID + " not found."));
+        return basket.getProducts();
+    }
+
     void addProduct(String userID, BasketProductRequest request) {
         Product product = basketProductMapper.mapToProduct(request);
         Basket basket = basketRepository.findById(userID).orElse(new Basket(userID,new HashSet<>()));
