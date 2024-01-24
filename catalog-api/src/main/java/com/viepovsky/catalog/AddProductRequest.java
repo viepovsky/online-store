@@ -28,13 +28,13 @@ public class AddProductRequest {
 
     @DecimalMin(
             value = "0",
-            message = "Price must be greater than 0."
+            message = "Price must be greater or equal to 0."
     )
     @NotNull(message = "Price must not be null.")
     private BigDecimal price;
 
     @Min(
-            value = 0,
+            value = 1,
             message = "Quantity must be greater than 0."
     )
     @NotNull(message = "Quantity must not be null.")

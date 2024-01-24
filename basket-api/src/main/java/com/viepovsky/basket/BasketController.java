@@ -1,6 +1,8 @@
 package com.viepovsky.basket;
 
 import com.viepovsky.basket.Basket.Product;
+import com.viepovsky.basket.dto.AddProductRequest;
+import com.viepovsky.basket.dto.UpdateProductRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +29,7 @@ class BasketController {
     @PostMapping
     void addProduct(
             @RequestParam(name = "user-id") @NotBlank String userID,
-            @RequestBody @Valid BasketProductRequest request
+            @RequestBody @Valid AddProductRequest request
     ) {
         basketService.addProduct(userID, request);
     }
@@ -35,7 +37,7 @@ class BasketController {
     @PutMapping
     void updateProduct(
             @RequestParam(name = "user-id") @NotBlank String userID,
-            @RequestBody @Valid BasketProductRequest request
+            @RequestBody @Valid UpdateProductRequest request
     ) {
         basketService.updateProduct(userID, request);
     }

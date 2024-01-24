@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.redis.core.RedisHash;
 
 import java.util.List;
@@ -25,10 +26,24 @@ class Basket {
     @Getter
     @Setter
     @NoArgsConstructor
-    @AllArgsConstructor
     static class Product {
+
         private String productId;
+
         private Long quantity;
+
+        @Transient
+        private Integer quantityChange;
+
+        Product(String productId, Long quantity) {
+            this.productId = productId;
+            this.quantity = quantity;
+        }
+
+        Product(String productId, Integer quantityChange) {
+            this.productId = productId;
+            this.quantityChange = quantityChange;
+        }
 
         @Override
         public boolean equals(Object o) {

@@ -15,6 +15,10 @@ class CatalogService {
         Product product = productMapper.mapToProduct(request);
         catalogRepository.save(product);
     }
+
+    boolean isProductInCatalog(String productID) {
+        return catalogRepository.existsById(productID);
+    }
 //
 //    void addProduct(Product product) {
 //        catalogRepository.save(product);
