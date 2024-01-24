@@ -14,7 +14,7 @@
     <module>basket-api</module>
     <module>catalog-api</module>
     <module>eureka-server</module>
-    <module>clients</module>
+    <module>clients-open-feign</module>
   </modules>
 
 

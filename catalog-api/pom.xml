@@ -31,7 +31,7 @@
 
         <dependency>
             <groupId>com.viepovsky</groupId>
-            <artifactId>clients</artifactId>
+            <artifactId>clients-open-feign</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
