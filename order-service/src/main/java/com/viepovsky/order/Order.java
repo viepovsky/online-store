@@ -1,20 +1,29 @@
 package com.viepovsky.order;
 
+import com.viepovsky.order.audit.BaseEntityAudit;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
-@Entity(name = "Order")
-@Table(name = "order")
-class Order {
+@NoArgsConstructor
+@Entity(name = "Orders")
+@Table(name = "orders")
+class Order extends BaseEntityAudit {
 
     @Id
     @SequenceGenerator(
@@ -32,7 +41,43 @@ class Order {
     )
     private Long id;
 
+    @Column(
+            name = "user_id",
+            nullable = false
+    )
+    private String userId;
 
+    @OneToMany(
+            targetEntity = Product.class,
+            mappedBy = "order",
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+            orphanRemoval = true
+    )
+    private List<Product> products;
 
+    @Column(
+            name = "total_price",
+            nullable = false
+    )
+    private BigDecimal totalPrice;
 
+    @Column(
+            name = "payment_status",
+            nullable = false
+    )
+    private PaymentStatus paymentStatus;
+
+    @Column(
+            name = "payment_date",
+            columnDefinition = "TIMESTAMP WITHOUT TIME ZONE"
+    )
+    private LocalDateTime paymentDate;
+
+    Order(String userId,
+          BigDecimal totalPrice,
+          PaymentStatus paymentStatus) {
+        this.userId = userId;
+        this.totalPrice = totalPrice;
+        this.paymentStatus = paymentStatus;
+    }
 }
