@@ -11,10 +11,11 @@
   <name>viepovsky-online-store</name>
 
   <modules>
-    <module>basket-api</module>
-    <module>catalog-api</module>
+    <module>basket-service</module>
+    <module>catalog-service</module>
     <module>eureka-server</module>
     <module>clients-open-feign</module>
+    <module>order-service</module>
   </modules>
 
 
