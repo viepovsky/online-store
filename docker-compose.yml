@@ -24,7 +24,7 @@ services:
       - ME_CONFIG_MONGODB_ADMINPASSWORD=password
       - ME_CONFIG_MONGODB_SERVER=mongodb
     volumes:
-      - mongo_volume:/var/lib/express
+      - mongo_express_volume:/var/lib/express
     ports:
       - 8000:8081
     networks:
@@ -48,7 +48,7 @@ services:
     container_name: redis_insight
     image: redislabs/redisinsight:1.14.0
     volumes:
-      - redis_volume:/var/lib/redis_insight
+      - redis_gui_volume:/var/lib/redis_insight
     ports:
       - 8001:8001
     networks:
@@ -61,7 +61,7 @@ services:
     environment:
       POSTGRES_USER: viepovsky
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: barber
+      POSTGRES_DB: order
       PGDATA: /data/postgres
     volumes:
       - postgres_volume:/data/postgres
@@ -73,12 +73,12 @@ services:
 
   order_service_postgres_pgadmin:
     container_name: pgadmin
-    image: dpage/pgadmin4:8.2
+    image: dpage/pgadmin4:latest
     environment:
       PGADMIN_DEFAULT_EMAIL: viepovsky@viepovsky.com
       PGADMIN_DEFAULT_PASSWORD: admin
     volumes:
-      - postgres_volume:/var/lib/pgadmin
+      - pgadmin_volume:/var/lib/pgadmin
     ports:
       - 5050:80
     networks:
@@ -95,5 +95,8 @@ networks:
 
 volumes:
   mongo_volume:
+  mongo_express_volume:
   redis_volume:
+  redis_gui_volume:
   postgres_volume:
+  pgadmin_volume:
