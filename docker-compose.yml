@@ -1,5 +1,5 @@
 services:
-  catalog_api_mongodb:
+  catalog_service_mongodb:
     container_name: mongodb
     image: mongo:6.0.13-jammy
     environment:
@@ -14,7 +14,7 @@ services:
       - mongo_network
     restart: unless-stopped
 
-  catalog_api_mongo-express:
+  catalog_service_mongo_gui:
     container_name: mongo-express
     image: mongo-express:1.0.0-18
     environment:
@@ -30,10 +30,10 @@ services:
     networks:
       - mongo_network
     depends_on:
-      - catalog_api_mongodb
+      - catalog_service_mongodb
     restart: unless-stopped
 
-  basket_api_redis:
+  basket_service_redis:
     container_name: redis
     image: redis:6.2
     volumes:
@@ -44,9 +44,9 @@ services:
       - redis_network
     restart: unless-stopped
 
-  basket_api_redis_gui:
+  basket_service_redis_gui:
     container_name: redis_insight
-    image: redislabs/redisinsight:latest
+    image: redislabs/redisinsight:1.14.0
     volumes:
       - redis_volume:/var/lib/redis_insight
     ports:
@@ -55,11 +55,45 @@ services:
       - redis_network
     restart: unless-stopped
 
+  order_service_postgres:
+    container_name: postgres
+    image: postgres:13.13
+    environment:
+      POSTGRES_USER: viepovsky
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: barber
+      PGDATA: /data/postgres
+    volumes:
+      - postgres_volume:/data/postgres
+    ports:
+      - 5430:5432
+    networks:
+      - postgres_network
+    restart: unless-stopped
+
+  order_service_postgres_pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4:8.2
+    environment:
+      PGADMIN_DEFAULT_EMAIL: viepovsky@viepovsky.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    volumes:
+      - postgres_volume:/var/lib/pgadmin
+    ports:
+      - 5050:80
+    networks:
+      - postgres_network
+    depends_on:
+      - order_service_postgres
+    restart: unless-stopped
+
 networks:
   mongo_network:
   redis_network:
+  postgres_network:
     driver: bridge
 
 volumes:
   mongo_volume:
   redis_volume:
+  postgres_volume:
