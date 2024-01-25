@@ -1,5 +1,6 @@
 package com.viepovsky.order;
 
+import com.viepovsky.order.dto.OrderResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +18,7 @@ class OrderController {
     private final OrderService orderService;
 
     @GetMapping
-    ResponseEntity<List<Order>> getAllOrders(@RequestParam(name = "user-id") String userID) {
+    ResponseEntity<List<OrderResponse>> getAllOrders(@RequestParam(name = "user-id") String userID) {
         return ResponseEntity.ok(orderService.getAllOrders(userID));
     }
 }

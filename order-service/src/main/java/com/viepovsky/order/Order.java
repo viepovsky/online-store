@@ -4,12 +4,15 @@ import com.viepovsky.order.audit.BaseEntityAudit;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,7 +23,9 @@ import java.util.List;
 
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "Orders")
 @Table(name = "orders")
 class Order extends BaseEntityAudit {
@@ -51,7 +56,8 @@ class Order extends BaseEntityAudit {
             targetEntity = Product.class,
             mappedBy = "order",
             cascade = {CascadeType.PERSIST, CascadeType.MERGE},
-            orphanRemoval = true
+            orphanRemoval = true,
+            fetch = FetchType.EAGER
     )
     private List<Product> products;
 
@@ -73,11 +79,4 @@ class Order extends BaseEntityAudit {
     )
     private LocalDateTime paymentDate;
 
-    Order(String userId,
-          BigDecimal totalPrice,
-          PaymentStatus paymentStatus) {
-        this.userId = userId;
-        this.totalPrice = totalPrice;
-        this.paymentStatus = paymentStatus;
-    }
 }

@@ -19,8 +19,7 @@ public abstract class BaseEntityAudit {
     @CreatedBy
     @Column(
             name = "created_by",
-            updatable = false,
-            columnDefinition = "TIMESTAMP WITHOUT TIME ZONE"
+            updatable = false
     )
     private String createdBy;
 
@@ -33,10 +32,7 @@ public abstract class BaseEntityAudit {
     private LocalDateTime createdDate;
 
     @LastModifiedBy
-    @Column(
-            name = "last_modified_by",
-            columnDefinition = "TIMESTAMP WITHOUT TIME ZONE"
-    )
+    @Column(name = "last_modified_by")
     private String lastModifiedBy;
 
     @LastModifiedDate

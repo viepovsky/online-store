@@ -1,5 +1,6 @@
 package com.viepovsky.order;
 
+import com.viepovsky.order.dto.OrderResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +12,12 @@ class OrderService {
 
     private final OrderRepository orderRepository;
 
-    List<Order> getAllOrders(String userID) {
-        return orderRepository.findAllByUserId(userID);
+    private final OrderMapper orderMapper;
+
+    List<OrderResponse> getAllOrders(String userID) {
+        return orderRepository.findAllByUserId(userID)
+                              .stream()
+                              .map(orderMapper::mapToOrderResponse)
+                              .toList();
     }
 }

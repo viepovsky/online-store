@@ -3,6 +3,7 @@ package com.viepovsky.order;
 import com.viepovsky.order.audit.BaseEntityAudit;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,6 +12,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,7 +23,9 @@ import java.math.BigDecimal;
 
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "Product")
 @Table(name = "product")
 class Product extends BaseEntityAudit {
@@ -38,7 +44,7 @@ class Product extends BaseEntityAudit {
             name = "id",
             updatable = false
     )
-    private String id;
+    private Long id;
 
     @Column(
             name = "product_id",
@@ -73,7 +79,7 @@ class Product extends BaseEntityAudit {
     )
     private Integer quantity;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "order_id",
             nullable = false,
@@ -82,15 +88,4 @@ class Product extends BaseEntityAudit {
     )
     private Order order;
 
-    Product(String name,
-            String brand,
-            String model,
-            BigDecimal price,
-            Integer quantity) {
-        this.name = name;
-        this.brand = brand;
-        this.model = model;
-        this.price = price;
-        this.quantity = quantity;
-    }
 }
